@@ -7,5 +7,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('note/<int:note_id>/', views.note_details, name='note'),
-    path('note/<int:note_id>/remove/', views.note_remove, name='note_remove'),
+    path('remove/<int:note_id>/', views.note_remove, name='note_remove'),
 ]
