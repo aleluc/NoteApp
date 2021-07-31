@@ -1,7 +1,7 @@
 from django.test import TestCase
 from selenium import webdriver
 
-from .forms import AddForm
+from .forms import AddNoteForm
 
 class FunctionalTestCase(TestCase):
 
@@ -51,7 +51,7 @@ class UnitTestCase(TestCase):
         self.assertTemplateUsed(response, 'home.html')
 
     def test_add_form(self):
-        form = AddForm(data={
+        form = AddNoteForm(data={
             'title': 'Test note',
             'content': 'Test content',
         })
