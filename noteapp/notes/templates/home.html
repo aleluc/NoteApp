@@ -1,0 +1,10 @@
+<div>
+    <h1>All notes</h1>
+    {% for note in notes %}
+        <div class="notetitle">
+            <a href="{% url 'note' note.id %}">
+                <h3>{{ note.title }}</h3>
+            </a>
+        </div>
+    {% endfor %}
+</div>
