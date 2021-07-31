@@ -4,5 +4,5 @@ from django.db.models import fields
 
 class Note(models.Model):
     title = fields.CharField(max_length=20)
-    content = fields.TextField
-    creation_date = fields.DateTimeField(auto_now_add=True)
+    content = fields.TextField(default="")
+    creation_date = fields.DateTimeField(auto_now=True)
