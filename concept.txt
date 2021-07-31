@@ -1,0 +1,34 @@
+
+Main features:
+1. sharing notes
+2. limited note lifespan
+3. note content available after entering pwd
+4. additional functionality?
+
+Roles:
+- User
+- Admin?
+
+User can:
+- add a note
+- remove a note
+- edit a note
+- share a note
+
+Admin can:
+- all of the above
+- add users
+- remove users
+
+Note has:
+- title
+- content
+- create date
+- owner?
+
+Workplan:
+1. simple app for one user (creating/deleting/editing)
+2. note expiration
+3. password protection
+4. multiuser
+5. additional feature
