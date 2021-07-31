@@ -8,7 +8,7 @@ class FunctionalTestCase(TestCase):
 
     def test_homepage_exists(self):
         self.browser.get('http://localhost:8000')
-        self.assertIn('home view', self.browser.page_source)
+        self.assertIn('All notes', self.browser.page_source)
 
     def tearDown(self) -> None:
         self.browser.quit()
