@@ -1,4 +1,9 @@
 <div>
+    <form action="{% url 'home' %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <input name="submit" type="submit" value="Add note">
+    </form>
     <h1>All notes</h1>
     {% for note in notes %}
         <div class="notetitle">
