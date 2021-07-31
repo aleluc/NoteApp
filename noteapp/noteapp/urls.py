@@ -6,5 +6,5 @@ from notes import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
-    path('note/<int:note_id>/', views.note_detail, name='note'),
+    path('note/<int:note_id>/', views.note_details, name='note'),
 ]
