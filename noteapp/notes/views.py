@@ -1,4 +1,4 @@
-from django.http.response import HttpResponse
+from django.http.response import Http404, HttpResponse
 from django.shortcuts import render
 
 from .models import Note
@@ -10,4 +10,12 @@ def home(request):
     })
 
 def note_details(request, note_id):
-    return HttpResponse(f'<p>note_details view with id {note_id}</p>')
+    try:
+        note = Note.object.get(id=note_id)
+    except Note.DoesNotExist:
+        raise Http404('Note does not exist')
+    return render(request, 'note_details.html', {
+        'note': note,
+    })
+
+
