@@ -11,11 +11,9 @@ def home(request):
 
 def note_details(request, note_id):
     try:
-        note = Note.object.get(id=note_id)
+        note = Note.objects.get(id=note_id)
     except Note.DoesNotExist:
         raise Http404('Note does not exist')
     return render(request, 'note_details.html', {
         'note': note,
     })
-
-
