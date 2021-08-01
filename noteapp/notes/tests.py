@@ -22,17 +22,30 @@ class FunctionalTestCase(TestCase):
         # when
         self.browser.find_element_by_name('Add Note').click()
         title = self.browser.find_element_by_id('id_title')
-        title.send_keys('Test note')
+        title.send_keys('Test')
         content = self.browser.find_element_by_id('id_content')
         content.send_keys('Test content')
         self.browser.find_element_by_name('submit').click()
 
         # then
-        self.browser.find_element_by_name('Test note').click()
         self.assertIn('Test content', self.browser.page_source)
+        self.browser.find_element_by_name('remove').click()
 
-    # def test_remove_note(self):
-    #     pass
+    def test_remove_note(self):
+        #given
+        self.browser.get('http://localhost:8000')
+        self.browser.find_element_by_name('Add Note').click()
+        title = self.browser.find_element_by_id('id_title')
+        title.send_keys('Remove_test')
+        content = self.browser.find_element_by_id('id_content')
+        content.send_keys('Test content')
+        self.browser.find_element_by_name('submit').click()
+
+        # when
+        self.browser.find_element_by_name('remove').click()
+
+        # then
+        self.assertNotIn('Remove_test', self.browser.page_source)
 
     # def test_edit_note(self):
     #     pass
