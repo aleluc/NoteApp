@@ -47,8 +47,27 @@ class FunctionalTestCase(TestCase):
         # then
         self.assertNotIn('Remove_test', self.browser.page_source)
 
-    # def test_edit_note(self):
-    #     pass
+    def test_edit_note(self):
+        #given
+        self.browser.get('http://localhost:8000')
+        self.browser.find_element_by_name('Add Note').click()
+        title = self.browser.find_element_by_id('id_title')
+        title.send_keys('Edit_test')
+        content = self.browser.find_element_by_id('id_content')
+        content.send_keys('Test content')
+        self.browser.find_element_by_name('submit').click()
+
+        # when
+        self.browser.find_element_by_name('edit').click()
+        title = self.browser.find_element_by_id('id_title')
+        title.send_keys('Edit_test_edited')
+        content = self.browser.find_element_by_id('id_content')
+        content.send_keys('Test content edited')
+        self.browser.find_element_by_name('save').click()
+
+        # then
+        self.assertIn('Edit_test_edited', self.browser.page_source)
+        self.assertIn('Test content edited', self.browser.page_source)
 
     # def test_share_note(self):
     #     pass
@@ -62,6 +81,15 @@ class UnitTestCase(TestCase):
     def test_home_page_template(self):
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'home.html')
+
+    def test_note_detail_page_template(self):
+        pass
+
+    def test_add_note_page_template(self):
+        pass
+
+    def test_remove_note_page_template(self):
+        pass
 
     def test_add_form(self):
         form = AddNoteForm(data={
