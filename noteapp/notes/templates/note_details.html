@@ -3,6 +3,10 @@
         {% csrf_token %}
         <input name="go_back" type="submit" value="Go back">
     </form>
+    <form action="{% url 'edit_note' note.id %}" method="GET">
+        {% csrf_token %}
+        <input name="edit" type="submit" value="Edit note">
+    </form>
     <h3>{{ note.title }}</h3>
     <p>{{ note.content }}</p>
     <p>Created on: {{ note.creation_date }} </p>

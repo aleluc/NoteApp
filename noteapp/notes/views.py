@@ -47,3 +47,27 @@ def remove_note(request, note_id):
     return render(request, 'note_details.html', {
         'note': note,
     })
+
+def edit_note(request, note_id):
+    try:
+        note = Note.objects.get(id=note_id)
+        if request.method == "POST":
+            filled_form = AddNoteForm(request.POST)
+            if filled_form.is_valid():
+                title = filled_form.cleaned_data['title']
+                content = filled_form.cleaned_data['content']
+                note.title = title
+                note.content = content
+                note.save()
+                return redirect(f'/note/{note.id}/')
+    except Note.DoesNotExist:
+        raise Http404('Note does not exist')
+
+    form = AddNoteForm()
+    form.title = note.title
+    form.content = note.content
+
+    return render(request, 'edit_note.html', {
+        'form': form,
+        'note': note,
+    })
