@@ -68,6 +68,7 @@ class FunctionalTestCase(TestCase):
         # then
         self.assertIn('Edit_test_edited', self.browser.page_source)
         self.assertIn('Test content edited', self.browser.page_source)
+        self.browser.find_element_by_name('remove').click()
 
     # def test_share_note(self):
     #     pass
