@@ -6,6 +6,7 @@ from .forms import AddNoteForm
 
 def home(request):
     notes = Note.objects.all()
+
     return render(request, 'home.html', {
         'notes': notes,
     })
@@ -15,6 +16,7 @@ def note_details(request, note_id):
         note = Note.objects.get(id=note_id)
     except Note.DoesNotExist:
         raise Http404('Note does not exist')
+
     return render(request, 'note_details.html', {
         'note': note,
     })
@@ -42,8 +44,10 @@ def remove_note(request, note_id):
         if request.method == "POST":
             note.delete()
             return redirect('/')
+
     except Note.DoesNotExist:
         raise Http404('Note does not exist')
+
     return render(request, 'note_details.html', {
         'note': note,
     })
@@ -60,12 +64,14 @@ def edit_note(request, note_id):
                 note.content = content
                 note.save()
                 return redirect(f'/note/{note.id}/')
+        current_note = {
+            'title': note.title,
+            'content': note.content,
+        }
+        form = AddNoteForm(initial=current_note)
+
     except Note.DoesNotExist:
         raise Http404('Note does not exist')
-
-    form = AddNoteForm()
-    form.title = note.title
-    form.content = note.content
 
     return render(request, 'edit_note.html', {
         'form': form,
