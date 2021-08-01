@@ -1,8 +1,12 @@
 <div>
+    <form action="{% url 'home' %}" method="GET">
+        {% csrf_token %}
+        <input name="go_back" type="submit" value="Go back">
+    </form>
     <h3>{{ note.title }}</h3>
     <p>{{ note.content }}</p>
     <p>Created on: {{ note.creation_date }} </p>
-    <form action="{% url 'note_remove' note.id %}" method="POST">
+    <form action="{% url 'remove_note' note.id %}" method="POST">
         {% csrf_token %}
         <input name="remove" type="submit" value="Remove note">
     </form>

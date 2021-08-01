@@ -1,0 +1,11 @@
+<div>
+    <form action="{% url 'home' %}" method="GET">
+        {% csrf_token %}
+        <input name="go_back" type="submit" value="Go back">
+    </form>
+    <form action="{% url 'add_note' %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <input name="submit" type="submit" value="Add note">
+    </form>
+</div>

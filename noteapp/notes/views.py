@@ -5,21 +5,9 @@ from .models import Note
 from .forms import AddNoteForm
 
 def home(request):
-    if request.method == "POST":
-        filled_form = AddNoteForm(request.POST)
-        if filled_form.is_valid():
-            title = filled_form.cleaned_data['title']
-            content = filled_form.cleaned_data['content']
-            note = Note()
-            note.title = title
-            note.content = content
-            note.save()
-
-    form = AddNoteForm()
     notes = Note.objects.all()
     return render(request, 'home.html', {
         'notes': notes,
-        'form': form,
     })
 
 def note_details(request, note_id):
@@ -31,7 +19,24 @@ def note_details(request, note_id):
         'note': note,
     })
 
-def note_remove(request, note_id):
+def add_note(request):
+    if request.method == "POST":
+        filled_form = AddNoteForm(request.POST)
+        if filled_form.is_valid():
+            title = filled_form.cleaned_data['title']
+            content = filled_form.cleaned_data['content']
+            note = Note()
+            note.title = title
+            note.content = content
+            note.save()
+            return redirect(f'/note/{note.id}/')
+
+    form = AddNoteForm()
+    return render(request, 'add_note.html', {
+        'form': form,
+    })
+
+def remove_note(request, note_id):
     try:
         note = Note.objects.get(id=note_id)
         if request.method == "POST":
