@@ -7,12 +7,12 @@ Main features:
 
 Roles:
 - User
-- Admin?
+- Admin (automaticaly created via django)
 
 User can:
-- add a note
-- remove a note
-- edit a note
+x add a note
+x remove a note
+x edit a note
 - share a note
 
 Admin can:
