@@ -10,5 +10,5 @@ class Note(models.Model):
     owner = models.ForeignKey(User)
     shared_with = models.ManyToManyField(User)
 
-    def share_note(self):
-        pass
+    def share_note(self, user_id):
+        self.shared_with.add(user_id)
