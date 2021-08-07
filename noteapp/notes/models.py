@@ -10,5 +10,22 @@ class Note(models.Model):
     owner = models.ForeignKey(User)
     shared_with = models.ManyToManyField(User)
 
+    def set_title(self, title):
+        self.title = title
+
+    def get_title(self):
+        return self.title
+
+    def set_content(self, content):
+        self.content = content
+
+    def get_content(self):
+        return self.content
+
     def share_note(self, user_id):
         self.shared_with.add(user_id)
+
+    def check_permission(self, user_id):
+        if user_id in [self.owner, list(self.shared_with.all())]:
+            return True
+        return False
