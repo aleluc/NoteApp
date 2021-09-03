@@ -1,5 +1,7 @@
 from django.http.response import Http404, HttpResponse
 from django.shortcuts import redirect, render
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 from .models import Note
 from .forms import AddNoteForm
@@ -11,6 +13,7 @@ def home(request):
         'notes': notes,
     })
 
+@login_required
 def note_details(request, note_id):
     try:
         note = Note.objects.get(id=note_id)
@@ -21,6 +24,7 @@ def note_details(request, note_id):
         'note': note,
     })
 
+@login_required
 def add_note(request):
     if request.method == "POST":
         filled_form = AddNoteForm(request.POST)
