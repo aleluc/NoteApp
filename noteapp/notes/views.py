@@ -30,6 +30,7 @@ def add_note(request):
             note = Note()
             note.title = title
             note.content = content
+            note.owner = request.user
             note.save()
             return redirect(f'/note/{note.id}/')
 

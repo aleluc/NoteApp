@@ -9,7 +9,7 @@
     </form>
     <h3>{{ note.title }}</h3>
     <p>{{ note.content }}</p>
-    <p>Created on: {{ note.creation_date }} </p>
+    <p>Created on: {{ note.creation_date }} by: {{ note.owner.username }} </p>
     <form action="{% url 'remove_note' note.id %}" method="POST">
         {% csrf_token %}
         <input name="remove" type="submit" value="Remove note">
