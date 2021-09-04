@@ -25,7 +25,8 @@ class Note(models.Model):
         return self.content
 
     def share_note(self, user_id):
-        self.shared_with.add(user_id)
+        if user_id != self.owner.id:
+            self.shared_with.add(user_id)
 
     def check_permission(self, user_id):
         users = list(self.shared_with.all())
