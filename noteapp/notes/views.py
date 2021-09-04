@@ -49,6 +49,7 @@ def add_note(request):
         'form': form,
     })
 
+@login_required
 def remove_note(request, note_id):
     try:
         note = Note.objects.get(id=note_id)
@@ -63,6 +64,7 @@ def remove_note(request, note_id):
         'note': note,
     })
 
+@login_required
 def edit_note(request, note_id):
     try:
         note = Note.objects.get(id=note_id)
@@ -90,6 +92,7 @@ def edit_note(request, note_id):
         'note': note,
     })
 
+@login_required
 def share_note(request, note_id):
     try:
         note = Note.objects.get(id=note_id)
@@ -111,4 +114,3 @@ def share_note(request, note_id):
         'form': form,
         'note': note,
     })
-
