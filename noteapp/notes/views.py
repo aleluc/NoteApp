@@ -8,9 +8,13 @@ from .forms import AddNoteForm
 
 def home(request):
     notes = Note.objects.all()
+    viewed_notes = []
+    for note in notes:
+        if note.check_permission(request.user):
+            viewed_notes.append(note)
 
     return render(request, 'home.html', {
-        'notes': notes,
+        'notes': viewed_notes,
     })
 
 @login_required
