@@ -1,9 +1,5 @@
 <div>
-    <form action="{% url 'login' %}" method="GET">
-        {% csrf_token %}
-        <input name="login" type="submit" value="Login">
-    </form>
-    <form action="{% url 'logout' %}" method="GET">
+    <form {% if user.is_authenticated %} action="{% url 'logout' %}" method="GET">
         {% csrf_token %}
         <input name="logout" type="submit" value="Logout">
     </form>
@@ -11,6 +7,10 @@
         {% csrf_token %}
         <input name="Add Note" type="submit" value="Add Note">
     </form>
+    <form {% else %} action="{% url 'login' %}" method="GET">
+        {% csrf_token %}
+        <input name="login" type="submit" value="Login">
+    </form {% endif %}>
     <h1>All notes</h1>
     {% for note in notes %}
         <div class="notetitle">
