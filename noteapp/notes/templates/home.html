@@ -1,4 +1,8 @@
 <div>
+    <form action="{% url 'logout' %}" method="GET">
+        {% csrf_token %}
+        <input name="logout" type="submit" value="Logout">
+    </form>
     <form action="{% url 'add_note' %}" method="GET">
         {% csrf_token %}
         <input name="Add Note" type="submit" value="Add Note">
