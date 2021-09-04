@@ -35,12 +35,14 @@ def add_note(request):
         if filled_form.is_valid():
             title = filled_form.cleaned_data['title']
             content = filled_form.cleaned_data['content']
-            expiration = filled_form.cleaned_data['expiration']
+            expires = filled_form.cleaned_data['expires']
+            expiration_date = filled_form.cleaned_data['expiration']
             note = Note()
             note.title = title
             note.content = content
+            note.expires = expires
             note.owner = request.user
-            note.expiration_date = expiration
+            note.expiration_date = expiration_date
             note.save()
             return redirect(f'/note/{note.id}/')
 
@@ -73,15 +75,19 @@ def edit_note(request, note_id):
             if filled_form.is_valid():
                 title = filled_form.cleaned_data['title']
                 content = filled_form.cleaned_data['content']
-                expiration = filled_form.cleaned_data['expiration']
+                expires = filled_form.cleaned_data['expires']
+                expiration_date = filled_form.cleaned_data['expiration']
                 note.title = title
                 note.content = content
-                note.expiration_date = expiration
+                note.expires = expires
+                note.expiration_date = expiration_date
                 note.save()
                 return redirect(f'/note/{note.id}/')
         current_note = {
             'title': note.title,
             'content': note.content,
+            'expires': note.expires,
+            'expiration_date': note.expiration_date,
         }
         form = AddNoteForm(initial=current_note)
     except Note.DoesNotExist:
