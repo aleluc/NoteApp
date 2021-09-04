@@ -7,6 +7,7 @@ class Note(models.Model):
     title = fields.CharField(max_length=20)
     content = fields.TextField(default="")
     creation_date = fields.DateTimeField(auto_now=True)
+    expiration_date = fields.DateTimeField(default=None)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')
     shared_with = models.ManyToManyField(User)
 

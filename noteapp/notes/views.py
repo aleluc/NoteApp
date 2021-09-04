@@ -36,10 +36,12 @@ def add_note(request):
         if filled_form.is_valid():
             title = filled_form.cleaned_data['title']
             content = filled_form.cleaned_data['content']
+            expiration = filled_form.cleaned_data['expiration']
             note = Note()
             note.title = title
             note.content = content
             note.owner = request.user
+            note.expiration_date = expiration
             note.save()
             return redirect(f'/note/{note.id}/')
 
@@ -70,8 +72,10 @@ def edit_note(request, note_id):
             if filled_form.is_valid():
                 title = filled_form.cleaned_data['title']
                 content = filled_form.cleaned_data['content']
+                expiration = filled_form.cleaned_data['expiration']
                 note.title = title
                 note.content = content
+                note.expiration_date = expiration
                 note.save()
                 return redirect(f'/note/{note.id}/')
         current_note = {

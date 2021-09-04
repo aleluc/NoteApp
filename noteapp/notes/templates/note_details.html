@@ -18,6 +18,7 @@
     <h3>{{ note.title }}</h3>
     <p>{{ note.content }}</p>
     <p>Created on: {{ note.creation_date }} by: {{ note.owner.username }} </p>
+    <p>Expires on: {{ note.expiration_date }} </p>
     <p>Shared with:
         {% for user_shared in note.shared_with.all %}
             {{ user_shared.username }};
