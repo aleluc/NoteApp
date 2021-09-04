@@ -11,9 +11,14 @@
         {% csrf_token %}
         <input name="edit" type="submit" value="Edit note">
     </form>
+    <form action="{% url 'share_note' note.id %}" method="GET">
+        {% csrf_token %}
+        <input name="share" type="submit" value="Share note">
+    </form>
     <h3>{{ note.title }}</h3>
     <p>{{ note.content }}</p>
     <p>Created on: {{ note.creation_date }} by: {{ note.owner.username }} </p>
+    <p>Shared with: {{ note.shared_with.all }} </p>
     <form action="{% url 'remove_note' note.id %}" method="POST">
         {% csrf_token %}
         <input name="remove" type="submit" value="Remove note">

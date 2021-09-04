@@ -24,8 +24,11 @@ class Note(models.Model):
 
     def share_note(self, user_id):
         self.shared_with.add(user_id)
+        print([self.owner, list(self.shared_with.all())])
 
     def check_permission(self, user_id):
-        if user_id in [self.owner, list(self.shared_with.all())]:
+        users = list(self.shared_with.all())
+        users.append(self.owner)
+        if user_id in users:
             return True
         return False

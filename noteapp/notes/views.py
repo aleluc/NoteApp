@@ -1,10 +1,11 @@
-from django.http.response import Http404, HttpResponse
+from django.http.response import Http404
 from django.shortcuts import redirect, render
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from .models import Note
-from .forms import AddNoteForm
+from .forms import AddNoteForm, ShareNoteForm
 
 def home(request):
     notes = Note.objects.all()
@@ -78,7 +79,6 @@ def edit_note(request, note_id):
             'content': note.content,
         }
         form = AddNoteForm(initial=current_note)
-
     except Note.DoesNotExist:
         raise Http404('Note does not exist')
 
@@ -86,3 +86,26 @@ def edit_note(request, note_id):
         'form': form,
         'note': note,
     })
+
+def share_note(request, note_id):
+    try:
+        note = Note.objects.get(id=note_id)
+        if request.method == "POST":
+            filled_form = ShareNoteForm(request.POST)
+            if filled_form.is_valid():
+                username = filled_form.cleaned_data['username']
+                user = User.objects.get(username=username)
+                print(user.id)
+                note.share_note(user.id)
+                note.save()
+                return redirect(f'/note/{note.id}/')
+        form = ShareNoteForm()
+
+    except Note.DoesNotExist:
+        raise Http404('Note does not exist')
+
+    return render(request, 'share_note.html', {
+        'form': form,
+        'note': note,
+    })
+
