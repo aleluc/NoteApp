@@ -19,11 +19,11 @@
     <p>{{ note.content }}</p>
     <p>Created on: {{ note.creation_date }} by: {{ note.owner.username }} </p>
     <p{% if note.expires %} >Expires on: {{ note.expiration_date }} </p{% endif %}>
-    <p>Shared with:
+    <p{% if note.shared_with.all %}>Shared with:
         {% for user_shared in note.shared_with.all %}
             {{ user_shared.username }};
         {% endfor %}
-    </p>
+    </p{% endif %}>
     <form action="{% url 'remove_note' note.id %}" method="POST">
         {% csrf_token %}
         <input name="remove" type="submit" value="Remove note">
