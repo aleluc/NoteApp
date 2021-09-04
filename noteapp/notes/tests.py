@@ -92,7 +92,7 @@ class FunctionalTestCase(TestCase):
         self.browser.find_element_by_name('share').click()
         username = self.browser.find_element_by_id('id_username')
         username.send_keys('admin')
-        self.browser.find_element_by_name('submit').click()
+        self.browser.find_element_by_name('save').click()
 
         # then
         self.assertIn('Shared with', self.browser.page_source)
