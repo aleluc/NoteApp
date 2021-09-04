@@ -3,7 +3,7 @@ Main features:
 1. sharing notes
 2. limited note lifespan
 3. note content available after entering pwd
-4. additional functionality?
+4. additional functionality - public notes
 
 Roles:
 - User
@@ -24,7 +24,7 @@ Note has:
 - title
 - content
 - create date
-- owner?
+- owner
 
 Workplan:
 1. simple app for one user (creating/deleting/editing)
