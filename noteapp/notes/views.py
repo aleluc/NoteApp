@@ -28,22 +28,25 @@ def note_details(request, note_id):
         'note': note,
     })
 
+def fill_note(request, note, filled_form):
+    title = filled_form.cleaned_data['title']
+    content = filled_form.cleaned_data['content']
+    expires = filled_form.cleaned_data['expires']
+    expiration_date = filled_form.cleaned_data['expiration']
+    note.title = title
+    note.content = content
+    note.expires = expires
+    note.owner = request.user
+    note.expiration_date = expiration_date
+    note.save()
+
 @login_required
 def add_note(request):
     if request.method == "POST":
         filled_form = AddNoteForm(request.POST)
         if filled_form.is_valid():
-            title = filled_form.cleaned_data['title']
-            content = filled_form.cleaned_data['content']
-            expires = filled_form.cleaned_data['expires']
-            expiration_date = filled_form.cleaned_data['expiration']
             note = Note()
-            note.title = title
-            note.content = content
-            note.expires = expires
-            note.owner = request.user
-            note.expiration_date = expiration_date
-            note.save()
+            fill_note(request, note, filled_form)
             return redirect(f'/note/{note.id}/')
 
     form = AddNoteForm()
@@ -73,15 +76,7 @@ def edit_note(request, note_id):
         if request.method == "POST":
             filled_form = AddNoteForm(request.POST)
             if filled_form.is_valid():
-                title = filled_form.cleaned_data['title']
-                content = filled_form.cleaned_data['content']
-                expires = filled_form.cleaned_data['expires']
-                expiration_date = filled_form.cleaned_data['expiration']
-                note.title = title
-                note.content = content
-                note.expires = expires
-                note.expiration_date = expiration_date
-                note.save()
+                fill_note(request, note, filled_form)
                 return redirect(f'/note/{note.id}/')
         current_note = {
             'title': note.title,
@@ -107,7 +102,6 @@ def share_note(request, note_id):
             if filled_form.is_valid():
                 username = filled_form.cleaned_data['username']
                 user = User.objects.get(username=username)
-                print(user.id)
                 note.share_note(user.id)
                 note.save()
                 return redirect(f'/note/{note.id}/')
