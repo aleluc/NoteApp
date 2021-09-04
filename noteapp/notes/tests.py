@@ -19,6 +19,15 @@ class FunctionalTestCase(TestCase):
         password.send_keys('tester123')
         self.browser.find_element_by_css_selector('button[type="submit"]').click()
 
+    def create_note(self):
+        title = WebDriverWait(self.browser, 10).until(
+            EC.presence_of_element_located((By.ID, 'id_title'))
+            )
+        title.send_keys('Test')
+        content = self.browser.find_element_by_id('id_content')
+        content.send_keys('Test content')
+        self.browser.find_element_by_name('submit').click()
+
     def test_homepage_exists(self):
         # when
         self.browser.get('http://localhost:8000')
@@ -33,13 +42,7 @@ class FunctionalTestCase(TestCase):
         # when
         self.browser.find_element_by_name('Add Note').click()
         self.login()
-        title = WebDriverWait(self.browser, 10).until(
-            EC.presence_of_element_located((By.ID, 'id_title'))
-            )
-        title.send_keys('Test')
-        content = self.browser.find_element_by_id('id_content')
-        content.send_keys('Test content')
-        self.browser.find_element_by_name('submit').click()
+        self.create_note()
 
         # then
         self.assertIn('Test content', self.browser.page_source)
@@ -50,13 +53,7 @@ class FunctionalTestCase(TestCase):
         self.browser.get('http://localhost:8000')
         self.browser.find_element_by_name('Add Note').click()
         self.login()
-        title = WebDriverWait(self.browser, 10).until(
-            EC.presence_of_element_located((By.ID, 'id_title'))
-            )
-        title.send_keys('Remove_test')
-        content = self.browser.find_element_by_id('id_content')
-        content.send_keys('Test content')
-        self.browser.find_element_by_name('submit').click()
+        self.create_note()
 
         # when
         self.browser.find_element_by_name('remove').click()
@@ -69,13 +66,7 @@ class FunctionalTestCase(TestCase):
         self.browser.get('http://localhost:8000')
         self.browser.find_element_by_name('Add Note').click()
         self.login()
-        title = WebDriverWait(self.browser, 10).until(
-            EC.presence_of_element_located((By.ID, 'id_title'))
-            )
-        title.send_keys('Edit_test')
-        content = self.browser.find_element_by_id('id_content')
-        content.send_keys('Test content')
-        self.browser.find_element_by_name('submit').click()
+        self.create_note()
 
         # when
         self.browser.find_element_by_name('edit').click()
@@ -90,8 +81,23 @@ class FunctionalTestCase(TestCase):
         self.assertIn('Test content edited', self.browser.page_source)
         self.browser.find_element_by_name('remove').click()
 
-    # def test_share_note(self):
-    #     pass
+    def test_share_note(self):
+        # given
+        self.browser.get('http://localhost:8000')
+        self.browser.find_element_by_name('Add Note').click()
+        self.login()
+        self.create_note()
+
+        # when
+        self.browser.find_element_by_name('share').click()
+        username = self.browser.find_element_by_id('id_username')
+        username.send_keys('admin')
+        self.browser.find_element_by_name('submit').click()
+
+        # then
+        self.assertIn('Shared with', self.browser.page_source)
+        self.assertIn('admin', self.browser.page_source)
+        self.browser.find_element_by_name('remove').click()
 
     def tearDown(self) -> None:
         self.browser.quit()
