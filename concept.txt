@@ -13,7 +13,7 @@ User can:
 x add a note
 x remove a note
 x edit a note
-- share a note
+x share a note
 
 Admin can:
 - all of the above
