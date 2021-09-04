@@ -1,5 +1,9 @@
 from django.test import TestCase
+from django.contrib.auth.models import User
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 
 from .forms import AddNoteForm
 
@@ -7,6 +11,13 @@ class FunctionalTestCase(TestCase):
 
     def setUp(self):
         self.browser = webdriver.Firefox()
+
+    def login(self):
+        login = self.browser.find_element_by_id('id_username')
+        login.send_keys('tester')
+        password = self.browser.find_element_by_id('id_password')
+        password.send_keys('tester123')
+        self.browser.find_element_by_css_selector('button[type="submit"]').click()
 
     def test_homepage_exists(self):
         # when
@@ -21,7 +32,10 @@ class FunctionalTestCase(TestCase):
 
         # when
         self.browser.find_element_by_name('Add Note').click()
-        title = self.browser.find_element_by_id('id_title')
+        self.login()
+        title = WebDriverWait(self.browser, 10).until(
+            EC.presence_of_element_located((By.ID, 'id_title'))
+            )
         title.send_keys('Test')
         content = self.browser.find_element_by_id('id_content')
         content.send_keys('Test content')
@@ -35,7 +49,10 @@ class FunctionalTestCase(TestCase):
         #given
         self.browser.get('http://localhost:8000')
         self.browser.find_element_by_name('Add Note').click()
-        title = self.browser.find_element_by_id('id_title')
+        self.login()
+        title = WebDriverWait(self.browser, 10).until(
+            EC.presence_of_element_located((By.ID, 'id_title'))
+            )
         title.send_keys('Remove_test')
         content = self.browser.find_element_by_id('id_content')
         content.send_keys('Test content')
@@ -51,7 +68,10 @@ class FunctionalTestCase(TestCase):
         #given
         self.browser.get('http://localhost:8000')
         self.browser.find_element_by_name('Add Note').click()
-        title = self.browser.find_element_by_id('id_title')
+        self.login()
+        title = WebDriverWait(self.browser, 10).until(
+            EC.presence_of_element_located((By.ID, 'id_title'))
+            )
         title.send_keys('Edit_test')
         content = self.browser.find_element_by_id('id_content')
         content.send_keys('Test content')
