@@ -13,6 +13,7 @@ class FunctionalTestCase(TestCase):
         self.browser = webdriver.Firefox()
 
     def login(self):
+        self.browser.find_element_by_name('login').click()
         login = self.browser.find_element_by_id('id_username')
         login.send_keys('tester')
         password = self.browser.find_element_by_id('id_password')
@@ -40,8 +41,8 @@ class FunctionalTestCase(TestCase):
         self.browser.get('http://localhost:8000')
 
         # when
-        self.browser.find_element_by_name('Add Note').click()
         self.login()
+        self.browser.find_element_by_name('Add Note').click()
         self.create_note()
 
         # then
@@ -51,8 +52,8 @@ class FunctionalTestCase(TestCase):
     def test_remove_note(self):
         #given
         self.browser.get('http://localhost:8000')
-        self.browser.find_element_by_name('Add Note').click()
         self.login()
+        self.browser.find_element_by_name('Add Note').click()
         self.create_note()
 
         # when
@@ -64,8 +65,8 @@ class FunctionalTestCase(TestCase):
     def test_edit_note(self):
         #given
         self.browser.get('http://localhost:8000')
-        self.browser.find_element_by_name('Add Note').click()
         self.login()
+        self.browser.find_element_by_name('Add Note').click()
         self.create_note()
 
         # when
@@ -84,8 +85,8 @@ class FunctionalTestCase(TestCase):
     def test_share_note(self):
         # given
         self.browser.get('http://localhost:8000')
-        self.browser.find_element_by_name('Add Note').click()
         self.login()
+        self.browser.find_element_by_name('Add Note').click()
         self.create_note()
 
         # when
