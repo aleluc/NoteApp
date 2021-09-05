@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import fields
 from django.contrib.auth.models import User
+import datetime
 
 
 class Note(models.Model):
@@ -8,7 +9,7 @@ class Note(models.Model):
     content = fields.TextField(default="")
     creation_date = fields.DateTimeField(auto_now=True)
     expires = fields.BooleanField(default=False)
-    expiration_date = fields.DateTimeField()
+    expiration_date = fields.DateField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')
     shared_with = models.ManyToManyField(User)
 
@@ -34,3 +35,9 @@ class Note(models.Model):
         if user_id in users:
             return True
         return False
+
+    def is_expired(self):
+        if self.expires and self.expiration_date < datetime.date.today():
+            return True
+        else:
+            return False

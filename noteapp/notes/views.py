@@ -10,6 +10,9 @@ def home(request):
     notes = Note.objects.all()
     viewed_notes = []
     for note in notes:
+        if note.is_expired():
+            note.delete()
+            continue
         if note.check_permission(request.user):
             viewed_notes.append(note)
 
