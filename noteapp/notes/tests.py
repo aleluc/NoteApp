@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
-from .forms import AddNoteForm
+from .forms import AddNoteForm, ShareNoteForm
 
 class FunctionalTestCase(TestCase):
 
@@ -110,20 +110,17 @@ class UnitTestCase(TestCase):
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'home.html')
 
-    def test_note_detail_page_template(self):
-        pass
-
-    def test_add_note_page_template(self):
-        pass
-
-    def test_remove_note_page_template(self):
-        pass
-
     def test_add_form(self):
         form = AddNoteForm(data={
             'title': 'Test note',
             'content': 'Test content',
             'expires': True,
-            'expiration': timezone.now()
+            'expiration': timezone.now(),
+        })
+        self.assertTrue(form.is_valid())
+
+    def test_share_note_form(self):
+        form = ShareNoteForm(data={
+            'username': 'testuser',
         })
         self.assertTrue(form.is_valid())
