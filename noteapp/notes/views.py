@@ -85,7 +85,7 @@ def edit_note(request, note_id):
             'title': note.title,
             'content': note.content,
             'expires': note.expires,
-            'expiration_date': note.expiration_date,
+            'expiration': note.expiration_date,
         }
         form = AddNoteForm(initial=current_note)
     except Note.DoesNotExist:
