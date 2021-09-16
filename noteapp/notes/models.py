@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import fields
 from django.contrib.auth.models import User
+from django.utils import timezone
 import datetime
 
 
@@ -9,7 +10,7 @@ class Note(models.Model):
     content = fields.TextField(default="")
     creation_date = fields.DateTimeField(auto_now=True)
     expires = fields.BooleanField(default=False)
-    expiration_date = fields.DateField()
+    expiration_date = fields.DateField(default=timezone.now)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')
     shared_with = models.ManyToManyField(User)
 
