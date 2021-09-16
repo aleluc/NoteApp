@@ -1,5 +1,5 @@
 from django.test import TestCase
-from django.contrib.auth.models import User
+from django.utils import timezone
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -123,5 +123,7 @@ class UnitTestCase(TestCase):
         form = AddNoteForm(data={
             'title': 'Test note',
             'content': 'Test content',
+            'expires': True,
+            'expiration': timezone.now()
         })
         self.assertTrue(form.is_valid())
