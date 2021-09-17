@@ -1,20 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
 <div>
-    <form action="{% url 'logout' %}" method="GET">
-        {% csrf_token %}
-        <input name="logout" type="submit" value="Logout">
-    </form>
-    <form action="{% url 'home' %}" method="GET">
-        {% csrf_token %}
-        <input name="go_back" type="submit" value="Go back">
-    </form>
-    <form action="{% url 'edit_note' note.id %}" method="GET">
-        {% csrf_token %}
-        <input name="edit" type="submit" value="Edit note">
-    </form>
-    <form action="{% url 'share_note' note.id %}" method="GET">
-        {% csrf_token %}
-        <input name="share" type="submit" value="Share note">
-    </form>
+    <div class="btn-group" role="group" aria-label="Menu">
+        <a class="btn btn-primary" href="{% url 'logout' %}" role="button">Logout</a>
+        <a class="btn btn-primary" href="{% url 'home' %}" role="button">Go Back</a>
+        <a class="btn btn-primary" href="{% url 'edit_note' note.id %}" role="button">Edit</a>
+        <a class="btn btn-primary" href="{% url 'share_note' note.id %}" role="button">Share</a>
+        <a class="btn btn-primary" href="{% url 'remove_note' note.id %}" role="button">Remove</a>
+    </div>
+    <br>
+    <br>
+
     <h3>{{ note.title }}</h3>
     <p>{{ note.content }}</p>
     <p>Created on: {{ note.creation_date }} by: {{ note.owner.username }} </p>
@@ -24,8 +20,5 @@
             {{ user_shared.username }};
         {% endfor %}
     </p{% endif %}>
-    <form action="{% url 'remove_note' note.id %}" method="POST">
-        {% csrf_token %}
-        <input name="remove" type="submit" value="Remove note">
-    </form>
 </div>
+{% endblock %}
