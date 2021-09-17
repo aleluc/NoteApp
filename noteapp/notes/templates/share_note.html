@@ -1,11 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
 <div>
+    <div class="btn-group" role="group" aria-label="Menu">
+        <a class="btn btn-primary" href="{% url 'logout' %}" role="button">Logout</a>
+        <a class="btn btn-primary" href="{% url 'home' %}" role="button">Go Back</a>
+        <a class="btn btn-primary" href="{% url 'edit_note' note.id %}" role="button">Edit</a>
+        <a class="btn btn-primary" href="{% url 'remove_note' note.id %}" role="button">Remove</a>
+    </div>
+    <br>
+    <br>
+
     <form action="{% url 'share_note' note.id %}" method="POST">
         {% csrf_token %}
         {{ form.as_p}}
-        <input name="save" type="submit" value="Save">
-    </form>
-    <form action="{% url 'note' note.id %}" method="GET">
-        {% csrf_token %}
-        <input name="go_back" type="submit" value="Cancel">
+        <div class="btn-group" role="group" aria-label="Menu">
+            <input class="btn btn-info" name="save" type="submit" value="Save">
+            <a class="btn btn-info" href="{% url 'note' note.id %}" role="button">Cancel</a>
+        </div>
     </form>
 </div>
+{% endblock %}
