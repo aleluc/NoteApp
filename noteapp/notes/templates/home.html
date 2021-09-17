@@ -1,22 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
 <div>
-    <form {% if user.is_authenticated %} action="{% url 'logout' %}" method="GET">
-        {% csrf_token %}
-        <input name="logout" type="submit" value="Logout">
-    </form>
-    <form action="{% url 'add_note' %}" method="GET">
-        {% csrf_token %}
-        <input name="Add Note" type="submit" value="Add Note">
-    </form>
-    <form {% else %} action="{% url 'login' %}" method="GET">
-        {% csrf_token %}
-        <input name="login" type="submit" value="Login">
-    </form {% endif %}>
+    <div class="btn-group" role="group" aria-label="Menu">
+        {% if user.is_authenticated %}
+        <a class="btn btn-primary" href="{% url 'logout' %}" role="button">Logout</a>
+        <a class="btn btn-primary" href="{% url 'add_note' %}" role="button">Add Note</a>
+        {% else %}
+        <a class="btn btn-primary" href="{% url 'login' %}" role="button">Login</a>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+
     <h1>All notes</h1>
     {% for note in notes %}
-        <div class="notetitle">
-            <a href="{% url 'note' note.id %}">
-                <h3>{{ note.title }}</h3>
-            </a>
+        <div class="card border-primary mb-3" style="width: 26rem;">
+            <div class="card-body">
+                <h3 class="card-title">{{ note.title }}</h3>
+                <p class="card-text">{{ note.content }}</p>
+                <div class="btn-group" role="group" aria-label="Menu">
+                    <a class="btn btn-info" href="{% url 'note' note.id %}" >Details</a>
+                    <a class="btn btn-info" href="{% url 'edit_note' note.id %}" role="button">Edit</a>
+                    <a class="btn btn-info" href="{% url 'share_note' note.id %}" role="button">Share</a>
+                    <a class="btn btn-info" href="{% url 'remove_note' note.id %}" role="button">Remove</a>
+                </div>
+            </div>
+            <style>
+                .border-primary { border: 2px solid #007bff50; }
+            </style>
         </div>
+        <br>
     {% endfor %}
 </div>
+{% endblock %}
