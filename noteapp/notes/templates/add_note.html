@@ -1,11 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
 <div>
-    <form action="{% url 'home' %}" method="GET">
-        {% csrf_token %}
-        <input name="go_back" type="submit" value="Go back">
-    </form>
+    <div class="btn-group" role="group" aria-label="Menu">
+        <a class="btn btn-primary" href="{% url 'logout' %}" role="button">Logout</a>
+        <a class="btn btn-primary" href="{% url 'home' %}" role="button">Go Back</a>
+    </div>
+    <br>
+    <br>
+
     <form action="{% url 'add_note' %}" method="POST">
         {% csrf_token %}
         {{ form.as_p}}
-        <input name="submit" type="submit" value="Add note">
+        <input class="btn btn-primary" name="submit" type="submit" value="Save">
     </form>
 </div>
+{% endblock %}
