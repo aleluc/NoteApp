@@ -2,11 +2,11 @@
 {% block content %}
 <div>
     <div class="btn-group" role="group" aria-label="Menu">
-        <a class="btn btn-primary" href="{% url 'logout' %}" role="button">Logout</a>
-        <a class="btn btn-primary" href="{% url 'home' %}" role="button">Go Back</a>
-        <a class="btn btn-primary" href="{% url 'edit_note' note.id %}" role="button">Edit</a>
-        <a class="btn btn-primary" href="{% url 'share_note' note.id %}" role="button">Share</a>
-        <a class="btn btn-primary" href="{% url 'remove_note' note.id %}" role="button">Remove</a>
+        <a class="btn btn-primary" href="{% url 'logout' %}" role="button" name="logout">Logout</a>
+        <a class="btn btn-primary" href="{% url 'home' %}" role="button" name="go_back">Go Back</a>
+        <a class="btn btn-primary" href="{% url 'edit_note' note.id %}" role="button" name="edit">Edit</a>
+        <a class="btn btn-primary" href="{% url 'share_note' note.id %}" role="button" name="share">Share</a>
+        <a class="btn btn-primary" href="{% url 'remove_note' note.id %}" role="button" name="remove">Remove</a>
     </div>
     <br>
     <br>
