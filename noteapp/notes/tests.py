@@ -114,6 +114,7 @@ class UnitTestCase(TestCase):
         form = AddNoteForm(data={
             'title': 'Test note',
             'content': 'Test content',
+            'is_public': False,
             'expires': True,
             'expiration': timezone.now(),
         })
