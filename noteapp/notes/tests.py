@@ -20,11 +20,11 @@ class FunctionalTestCase(TestCase):
         password.send_keys('tester123')
         self.browser.find_element_by_css_selector('button[type="submit"]').click()
 
-    def create_note(self):
+    def create_note(self, name):
         title = WebDriverWait(self.browser, 10).until(
             EC.presence_of_element_located((By.ID, 'id_title'))
             )
-        title.send_keys('Test')
+        title.send_keys(name)
         content = self.browser.find_element_by_id('id_content')
         content.send_keys('Test content')
         self.browser.find_element_by_name('submit').click()
@@ -43,7 +43,7 @@ class FunctionalTestCase(TestCase):
         # when
         self.login()
         self.browser.find_element_by_name('add_note').click()
-        self.create_note()
+        self.create_note('Test')
 
         # then
         self.assertIn('Test content', self.browser.page_source)
@@ -54,7 +54,7 @@ class FunctionalTestCase(TestCase):
         self.browser.get('http://localhost:8000')
         self.login()
         self.browser.find_element_by_name('add_note').click()
-        self.create_note()
+        self.create_note('Remove_test')
 
         # when
         self.browser.find_element_by_name('remove').click()
@@ -67,7 +67,7 @@ class FunctionalTestCase(TestCase):
         self.browser.get('http://localhost:8000')
         self.login()
         self.browser.find_element_by_name('add_note').click()
-        self.create_note()
+        self.create_note('Edit_test')
 
         # when
         self.browser.find_element_by_name('edit').click()
@@ -87,7 +87,7 @@ class FunctionalTestCase(TestCase):
         self.browser.get('http://localhost:8000')
         self.login()
         self.browser.find_element_by_name('add_note').click()
-        self.create_note()
+        self.create_note('Share_test')
 
         # when
         self.browser.find_element_by_name('share').click()
