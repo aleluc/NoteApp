@@ -13,7 +13,7 @@ def home(request):
         if note.is_expired():
             note.delete()
             continue
-        if note.check_permission(request.user):
+        if note.is_public() or note.check_permission(request.user):
             viewed_notes.append(note)
 
     return render(request, 'home.html', {
@@ -34,10 +34,12 @@ def note_details(request, note_id):
 def fill_note(request, note, filled_form):
     title = filled_form.cleaned_data['title']
     content = filled_form.cleaned_data['content']
+    is_public = filled_form.cleaned_data['is_public']
     expires = filled_form.cleaned_data['expires']
     expiration_date = filled_form.cleaned_data['expiration']
     note.title = title
     note.content = content
+    note.public = is_public
     note.expires = expires
     note.owner = request.user
     note.expiration_date = expiration_date
@@ -78,6 +80,7 @@ def edit_note(request, note_id):
         current_note = {
             'title': note.title,
             'content': note.content,
+            'is_public': note.public,
             'expires': note.expires,
             'expiration': note.expiration_date,
         }

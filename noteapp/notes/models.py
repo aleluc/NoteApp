@@ -13,6 +13,7 @@ class Note(models.Model):
     expiration_date = fields.DateField(default=timezone.now)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owner')
     shared_with = models.ManyToManyField(User)
+    public = fields.BooleanField(default=False)
 
     def set_title(self, title):
         self.title = title
@@ -42,3 +43,6 @@ class Note(models.Model):
             return True
         else:
             return False
+
+    def is_public(self):
+        return self.public

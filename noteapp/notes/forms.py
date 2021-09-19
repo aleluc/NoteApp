@@ -4,6 +4,7 @@ from django.forms.widgets import Widget
 class AddNoteForm(forms.Form):
     title = forms.CharField(label='Enter title:', widget=forms.TextInput)
     content = forms.CharField(label='Enter content:', widget=forms.Textarea)
+    is_public = forms.BooleanField(label='Make public?', widget=forms.CheckboxInput, required=False)
     expires = forms.BooleanField(label='Set expiration date?', widget=forms.CheckboxInput, required=False)
     expiration = forms.DateField(label='Enter expiration date', widget=forms.SelectDateWidget)
 
