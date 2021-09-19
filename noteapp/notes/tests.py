@@ -42,7 +42,7 @@ class FunctionalTestCase(TestCase):
 
         # when
         self.login()
-        self.browser.find_element_by_name('Add Note').click()
+        self.browser.find_element_by_name('add_note').click()
         self.create_note()
 
         # then
@@ -53,7 +53,7 @@ class FunctionalTestCase(TestCase):
         #given
         self.browser.get('http://localhost:8000')
         self.login()
-        self.browser.find_element_by_name('Add Note').click()
+        self.browser.find_element_by_name('add_note').click()
         self.create_note()
 
         # when
@@ -66,7 +66,7 @@ class FunctionalTestCase(TestCase):
         #given
         self.browser.get('http://localhost:8000')
         self.login()
-        self.browser.find_element_by_name('Add Note').click()
+        self.browser.find_element_by_name('add_note').click()
         self.create_note()
 
         # when
@@ -86,7 +86,7 @@ class FunctionalTestCase(TestCase):
         # given
         self.browser.get('http://localhost:8000')
         self.login()
-        self.browser.find_element_by_name('Add Note').click()
+        self.browser.find_element_by_name('add_note').click()
         self.create_note()
 
         # when
