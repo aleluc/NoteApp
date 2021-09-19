@@ -61,16 +61,10 @@ def add_note(request):
 def remove_note(request, note_id):
     try:
         note = Note.objects.get(id=note_id)
-        if request.method == "POST":
-            note.delete()
-            return redirect('/')
-
+        note.delete()
+        return redirect('/')
     except Note.DoesNotExist:
         raise Http404('Note does not exist')
-
-    return render(request, 'note_details.html', {
-        'note': note,
-    })
 
 @login_required
 def edit_note(request, note_id):
