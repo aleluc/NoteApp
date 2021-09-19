@@ -104,7 +104,14 @@ def share_note(request, note_id):
             filled_form = ShareNoteForm(request.POST)
             if filled_form.is_valid():
                 username = filled_form.cleaned_data['username']
-                user = User.objects.get(username=username)
+                try:
+                    user = User.objects.get(username=username)
+                except User.DoesNotExist:
+                    form = ShareNoteForm(initial={'username': 'Error: User does not exist'})
+                    return render(request, 'share_note.html', {
+                        'form': form,
+                        'note': note,
+                    })
                 note.share_note(user.id)
                 note.save()
                 return redirect(f'/note/{note.id}/')
